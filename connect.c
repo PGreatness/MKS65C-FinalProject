@@ -6,7 +6,7 @@
 
 int doX(char **board){
   int r, c = 0;
-  printf("Player (X): ");
+  printf("Player X: ");
   while(1){
     if(1 != scanf("%d", &c) || c < 1 || c > 7){
       while(getchar() != '\n');
@@ -28,7 +28,7 @@ int doX(char **board){
 }
 int doO(char **board){
   int r, c = 0;
-  printf("Player (O): ");
+  printf("Player O: ");
   while(1){
     if(1 != scanf("%d", &c) || c < 1 || c > 7 ){
       while(getchar() != '\n');
@@ -55,6 +55,7 @@ void print(char  *board[rows]){
     }
     printf("\n");
   }
+  printf("---------------------");
   printf("\n 1  2  3  4  5  6  7 \n\n");
 }
 int checkHorizontal(char *board[rows]){
@@ -81,13 +82,36 @@ int checkVertical(char *board[rows]){
   }
   return 0;
 }
+int checkDiagonalR(char *board[rows]){
+  int row, col;
+  for(row = 0; row < rows-3; row++){
+    for(col = 0; col < cols-3; col++){
+      if(board[row][col]!='_' && board[row][col] == board[row+1][col+1] &&  board[row][col] == board[row+2][col+2] &&  board[row][col] == board[row+3][col+3]){
+	return 1;
+      }
+    }
+  }
+  return 0;
+}
+int checkDiagonalL(char *board[rows]){
+  int row, col;
+  for(row = 5; row > rows-3; row--){
+    for(col = 0; col < cols-3; col++){
+      if(board[row][col]!='_' && board[row][col] == board[row-1][col+1] &&  board[row][col] == board[row-2][col+2] &&  board[row][col] == board[row-3][col+3]){
+	return 1;
+      }
+    }
+  }
+  return 0;
+}
 
 
 int connected(char *board[rows]){
-  return (checkHorizontal(board) || checkVertical(board));
+  return (checkHorizontal(board) || checkVertical(board) || checkDiagonalR(board)|| checkDiagonalL(board));
 }
 
 int main(int argc, char *argv[]){
+  int finished = 0;
   char  *board[rows]; 
   for (int i=0; i<rows; i++) 
     board[i] = (char *)malloc(cols * sizeof(char));
@@ -96,9 +120,6 @@ int main(int argc, char *argv[]){
       board[r][c]= '_';
     }
   }
-
-  int finished = 0;
-
   while(!finished){
     print(board);
     while(!doX(board)){
@@ -108,7 +129,7 @@ int main(int argc, char *argv[]){
     print(board);
     finished = connected(board);
     if(finished){
-      printf("Player (X) has won the game!\n");
+      printf("Player X has won the game!\n");
       return 0;
     }
     while(!doO(board)){
@@ -119,7 +140,7 @@ int main(int argc, char *argv[]){
     
   } 
   print(board);
-  printf("Player (O) has won the game!\n");
+  printf("Player O has won the game!\n");
   return 0;
 
 }
