@@ -31,8 +31,7 @@ int server_setup() {
   hints->ai_socktype = SOCK_STREAM;  //TCP socket
   hints->ai_flags = AI_PASSIVE;  //Use all valid addresses
   getaddrinfo(NULL, PORT, hints, &results); //NULL means use local address
-  int yes = 1;
-  setsockopt(sd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes));
+
   //bind the socket to address and port
   i = bind( sd, results->ai_addr, results->ai_addrlen );
   error_check( i, "server bind" );

@@ -12,7 +12,7 @@ void subserver(int from_client, char * person);
     }
   }}
 int main() {
-  fill();
+
   int listen_socket;
   int f;
   listen_socket = server_setup();
@@ -45,21 +45,16 @@ void subserver(int client_socket, char * who) {
 }
 
 void process(char * s, char * per) {
-  if (atoi(s) > COLS || atoi(s) - 1 < 0) {
+  if (atoi(s) > COLS || atoi(s) < 1) {
       char * tmp = strcpy(s, "Invalid number, try again");
       print(board);
       return;
     }
   if (!strcmp(per, "X")) {
-    int num = atoi(s) - 1;
+    int num = atoi(s);
     char * tmp = board[num];
-    for(int r = 5; r >= 0; r--){
-      if(board[r][num] == '_'){
-        board[r][num] = 'X';
-        break;
-      }
-    }
-    print(board);
+    int index = strchr(tmp, '_');
+    board[num][index] = 'X';
     int finished = connected(board);
     if (finished) {
       strcpy(s, "Player X has won the game!\n");
@@ -69,12 +64,8 @@ void process(char * s, char * per) {
   }else{
     int num = atoi(s);
     char * tmp = board[num];
-    for(int r = 5; r >= 0; r--){
-    if(board[r][num] == '_'){
-      board[r][num] = 'O';
-      break;
-    }
-  }
+    int index = strchr(tmp, '_');
+    board[num][index] = 'O';
     int finished = connected(board);
     if (finished) {
       strcpy(s, "Player O has won the game!\n");
