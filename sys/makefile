@@ -5,8 +5,8 @@ select: sclient sserver
 sserver: select_server.o networking.o
 	gcc -o server select_server.o networking.o
 
-fserver: forking_server.o networking.o
-	gcc -o server forking_server.o networking.o
+fserver: forking_server.o networking.o connect.o
+	gcc -o server forking_server.o networking.o connect.o
 
 sclient: select_client.o networking.o
 	gcc -o client select_client.o networking.o
@@ -29,5 +29,7 @@ forking_server.o: forking_server.c networking.h
 networking.o: networking.c networking.h
 	gcc -c networking.c
 
+connect.o: connect.c
+	gcc -c connect.c
 clean:
 	rm server client *.o
