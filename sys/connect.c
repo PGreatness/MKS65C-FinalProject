@@ -58,6 +58,17 @@ void print(char  *board[rows]){
   printf("---------------------");
   printf("\n 1  2  3  4  5  6  7 \n\n");
 }
+
+char * print_board(char * board[rows]) {
+  char * ret = "";
+  for (int r = 0; r < rows; r++) {
+    strcat(ret, board[r]);
+    strcat(ret, "\n");
+  }
+  strcat(ret, "---------------------");
+  strcat(ret, "\n 1  2  3  4  5  6  7 \n\n");
+  return ret;
+}
 int checkHorizontal(char *board[rows]){
   int row, col;
   for(row = 0; row < rows; row++){

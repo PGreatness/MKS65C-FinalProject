@@ -8,6 +8,8 @@
 #include <netdb.h>
 #include <string.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <sys/stat.h>
 
 #ifndef NETWORKING_H
 #define NETWORKING_H
@@ -30,6 +32,7 @@ int checkVertical(char *board[ROWS]);
 int checkDiagonalR(char *board[ROWS]);
 int checkDiagonalL(char *board[ROWS]);
 int connected(char *board[ROWS]);
+char * print_board(char * board[ROWS]);
 
 
 
