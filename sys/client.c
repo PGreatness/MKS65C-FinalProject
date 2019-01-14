@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     system("clear");
     *strchr(buffer, '\n') = 0;
     write(server_socket, buffer, sizeof(buffer));
-    if (read(server_socket, buffer, 300) == 0) {
+    if (read(server_socket, buffer, 600) == 0) {
       char * shtdwn = "Server shutdown, guess I should sleep too...";
       printf("\n\nWoops: %s\n", shtdwn);
       exit(1);

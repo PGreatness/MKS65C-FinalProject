@@ -4,10 +4,10 @@ void process(char *s, int p);
 char * append(const char *s, char c);
 void subserver(int from_client, int person);
 char* concat(const char *s1, const char *s2);
-char  *board[ROWS]; 
+char  *board[ROWS];
 
 void fill() {
-  for (int i=0; i<ROWS; i++) 
+  for (int i=0; i<ROWS; i++)
     board[i] = (char *)malloc((COLS) * sizeof(char));
   for(int r = 0; r < ROWS; r++){
     for (int c = 0; c <COLS; c++){
@@ -94,9 +94,9 @@ while (i < 2) {
           return 0;
         }
       }
-      
+
       char * hello[ROWS];
-      for (int i=0; i<ROWS; i++) 
+      for (int i=0; i<ROWS; i++)
         hello[i] = (char *)malloc((COLS) * sizeof(char));
       for(int r = 0; r < ROWS; r++){
         for (int c = 0; c <COLS; c++){
@@ -106,15 +106,19 @@ while (i < 2) {
       }
       char * send = "\n\t";
       for (int z = 0; z < 6; z++) {
-        send = concat(send, hello[z]);
+	       for (int c = 0; c < 7; c++) {
+	          send = append(send, ' ');
+            send = append(send, hello[z][c]);
+	          send = append(send, ' ');
+	       }
         send = append(send, '\n');
         send = append(send, '\t');
         printf("Hell, this sucks\n");
       }
-      send = concat(send, "1234567\n");
+      send = concat(send, " 1  2  3  4  5  6  7\n");
       printf("THis is send:\n%s\n", send);
 
-      write(numplayers[a], send, 300);
+      write(numplayers[a], send, 600);
       //close(numplayers[a]);
       printf("Boss level\n");
       // memset(buf, 0, sizeof(buf));
@@ -134,7 +138,7 @@ while (i < 2) {
 //   //   printf("Got here");
 //   //   freopen("share", "w", stdout);
 //   //   print(board);
-//   //   freopen("/dev/tty", "w", stdout); /*for gcc, ubuntu*/  
+//   //   freopen("/dev/tty", "w", stdout); /*for gcc, ubuntu*/
 //   // }
 //   for (int i = 0; i < 2; i++) {
 //     /* Code to send board across */
