@@ -14,8 +14,8 @@
 #ifndef NETWORKING_H
 #define NETWORKING_H
 
-#define BUFFER_SIZE 50
-#define PORT "9001"
+#define BUFFER_SIZE 80
+#define PORT "9002"
 #define TEST_IP "127.0.0.1"
 #define ROWS 6
 #define COLS 7
