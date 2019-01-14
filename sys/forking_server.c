@@ -7,12 +7,11 @@ char* concat(const char *s1, const char *s2);
   char  *board[ROWS]; 
   void fill() {
     for (int i=0; i<ROWS; i++) 
-    board[i] = (char *)malloc((COLS + 1) * sizeof(char));
+    board[i] = (char *)malloc((COLS) * sizeof(char));
   for(int r = 0; r < ROWS; r++){
-    for (int c = 0; c <COLS + 1; c++){
+    for (int c = 0; c <COLS; c++){
       board[r][c]= '_';
     }
-    board[r][COLS + 1] = '\0';
   }}
 int main() {
   fill();
@@ -50,30 +49,23 @@ void subserver(int client_socket, int who) {
     printf("[subserver %d] received: [%s]\n", getpid(), buffer);
     process(buffer, who);
     who = !who;
-    char * hello = "";
-    for (int i = COLS; i > 0; i--) {
-    for (int w = 0; w < ROWS; w++) {
-      char tmp = board[w][i];
-      hello = append(hello, tmp);
-      hello = append(hello, ' ');
-    }
-    hello = append(hello, ' ');
-    hello = append(hello, ' ');
-    hello = append(hello, (i + '0'));
-    hello = append(hello, '\n');
-  }
-  hello = append(hello, '\n');
-  printf("This is hello:\n%s\nsizeof(hello):%ld\n", hello, sizeof(hello));
+    // char hello[42] = (char *)malloc(sizeof(char) * 42);
+    // for(int r = 0; r < ROWS; r++){
+    //   for (int c = 0; c <COLS; c++){
+    //     hello[r * COLS + c] = board[r][c];
+    //   }
+    // }
+    // printf("This is hello: %s\n", hello);
   //hello = concat(hello, buffer);
   //printf("Now hello is this:\n%s\n", hello);
+  // write(client_socket, buffer, sizeof(buffer));
   write(client_socket, hello, sizeof(hello));
-  free(hello);
   }//end read loop
   close(client_socket);
   exit(0);
 }
 
-char *append(const char *orig, char c)
+char * append(const char *orig, char c)
 {
     int sz = strlen(orig);
     char *str = malloc(sz + 2);
@@ -112,7 +104,7 @@ void process(char * s, int per) {
       return;
     }
   if (!per) { // meaning that the person is X
-    int num = atoi(s);
+    int num = atoi(s) - 1;
     char * tmp = board[num];
     for(int r = 5; r >= 0; r--){
       if(board[r][num] == '_'){
@@ -130,7 +122,7 @@ void process(char * s, int per) {
       return;
     }
   }else{
-    int num = atoi(s);
+    int num = atoi(s) - 1;
     char * tmp = board[num];
     for(int r = 5; r >= 0; r--){
       if(board[r][num] == '_'){
