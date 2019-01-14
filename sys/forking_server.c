@@ -50,6 +50,8 @@ while (i < 2) {
   memset(buf, 0, sizeof(buf));
   while(1) {
     for (int a = 0; a < 2; a++) {
+      int winning = 0; // no one has won yet
+      char * win_message = "";
       read(numplayers[a], buf, sizeof(buf));
       char * s = buf;
       if (atoi(s) > COLS || atoi(s) - 1 < 0) {
@@ -71,9 +73,10 @@ while (i < 2) {
         printf("Got here\n");
         if (finished) {
           char * rite = "Player X has won the game!";
-          write(numplayers[0], rite, 50);
-          write(numplayers[1], rite, 50);
-          return 0;
+          //write(numplayers[0], rite, 50);
+          //write(numplayers[1], rite, 50);
+          winning = 1;
+          win_message = concat(win_message, rite);
         }
       }else{
         int num = atoi(s) - 1;
@@ -89,9 +92,10 @@ while (i < 2) {
         printf("Got here\n");
         if (finished) {
           char * rite = "Player O has won the game!";
-          write(numplayers[1], rite, 50);
-          write(numplayers[0], rite, 50);
-          return 0;
+          // write(numplayers[1], rite, 50);
+          // write(numplayers[0], rite, 50);
+          winning = 1;
+          win_message = concat(win_message, rite);
         }
       }
 
@@ -117,7 +121,15 @@ while (i < 2) {
       }
       send = concat(send, " 1  2  3  4  5  6  7\n");
       printf("THis is send:\n%s\n", send);
-
+      if (winning) {
+        send = append(send, '\n');
+        send = append(send, '\t');
+        send = concat(send, win_message);
+        send = append(send, '\n');
+        write(numplayers[0], send, 600);
+        write(numplayers[1], send, 600);
+        return 0;
+      }
       write(numplayers[a], send, 600);
       //close(numplayers[a]);
       printf("Boss level\n");
