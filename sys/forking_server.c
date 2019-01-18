@@ -104,7 +104,6 @@ while (i < 2) {
         hello[i] = (char *)malloc((COLS) * sizeof(char));
       for(int r = 0; r < ROWS; r++){
         for (int c = 0; c <COLS; c++){
-          printf("Hell, wanker\n");
           hello[r][c] = board[r][c];
         }
       }
@@ -117,7 +116,6 @@ while (i < 2) {
 	       }
         send = append(send, '\n');
         send = append(send, '\t');
-        printf("Hell, this sucks\n");
       }
       send = concat(send, " 1  2  3  4  5  6  7\n");
       printf("THis is send:\n%s\n", send);
